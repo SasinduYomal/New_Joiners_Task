@@ -36,8 +36,6 @@
   --success-color: #1a7f37;
 }
 
-
-
 body {
   font-family: var(--font-family);
   background-color: var(--bg-color);
