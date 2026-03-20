@@ -1,29 +1,40 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Navbar from "./components/Navbar";
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
 import CreatePortfolio from './pages/CreatePortfolio';
 import EditPortfolio from './pages/EditPortfolio';
 import PortfolioPreview from './pages/PortfolioPreview';
 import PublicPortfolio from './pages/PortfolioPage';
 
+function App() {
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
-const App = () => {
-  return (
-    <Router>
-      <div>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
+
+    return (
+        <Router>
+            <div className={`app-container ${theme}-theme`}>
+                <Navbar theme={theme} toggleTheme={toggleTheme} />
+                <main className="container wrapper">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
                         <Route path="/create" element={<CreatePortfolio />} />
                         <Route path="/edit/:username" element={<EditPortfolio />} />
                         <Route path="/preview/:username" element={<PortfolioPreview />} />
                         <Route path="/portfolio/:username" element={<PublicPortfolio />} />
+                    </Routes>
+                </main>
+            </div>
+        </Router>
+    );
+}
 
-          
-        </Routes>
-      </div>
-    </Router>
-  );
-};
 export default App;
