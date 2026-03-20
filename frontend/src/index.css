@@ -1,3 +1,4 @@
+@import "tailwindcss";
 :root {
   /* Colors */
   --bg-color: #0d1117;
@@ -35,11 +36,7 @@
   --success-color: #1a7f37;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+
 
 body {
   font-family: var(--font-family);

@@ -1,12 +1,9 @@
 import React from 'react'
-import CreatePortfolioForm from '../components/PortfolioForm';
+import PortfolioForm from '../components/PortfolioForm';
 
 const CreatePortfolio = () => {
-  return (
-    <div>
-        <CreatePortfolioForm />
-    </div>
-  )
-}
+    return <PortfolioForm isEdit={false} />;
+};
+
 
 export default CreatePortfolio

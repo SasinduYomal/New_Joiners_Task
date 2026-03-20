@@ -1,39 +1,17 @@
 import UserPortfolio from "../models/UserPortfolio.js";
 
-// Create a new portfolio
-export const createPortfolio = async (req, res) => {
+// Get all portfolios
+export const getAllPortfolios = async (req, res) => {
   try {
-    const { username } = req.body;
-
-    const existing = await UserPortfolio.findOne({
-      username: username?.toLowerCase(),
-    });
-
-    if (existing) {
-      return res.status(409).json({
-        error: "Username already taken, Please choose another.",
-      });
-    }
-
-    const portfolio = new UserPortfolio(req.body);
-    await portfolio.save();
-
-    res.status(201).json({
-      message: "Portfolio created successfully",
-      portfolio,
-    });
+    const portfolios = await UserPortfolio.find();
+    res.json(portfolios);
   } catch (err) {
-    if (err.name === "ValidationError") {
-      const messages = Object.values(err.errors).map((e) => e.message);
-      return res.status(400).json({ error: messages.join(", ") });
-    }
-
-    console.error("createPortfolio error:", err);
+    console.error("getAllPortfolios error:", err);
     res.status(500).json({ error: "Server error. Please try again." });
   }
 };
 
-// Get a portfolio
+// Get a single portfolio by username
 export const getPortfolio = async (req, res) => {
   try {
     const portfolio = await UserPortfolio.findOne({
@@ -51,7 +29,49 @@ export const getPortfolio = async (req, res) => {
   }
 };
 
-// Update
+// Create a new portfolio
+export const createPortfolio = async (req, res) => {
+  try {
+    const { username } = req.body;
+
+    if (!username) {
+      return res.status(400).json({ error: "Username is required." });
+    }
+
+    const existing = await UserPortfolio.findOne({
+      username: username.toLowerCase(),
+    });
+
+    if (existing) {
+      return res.status(409).json({
+        error: "Username already taken. Please choose another.",
+      });
+    }
+
+    // Fixed: ensure username is saved lowercase
+    const portfolio = new UserPortfolio({
+      ...req.body,
+      username: username.toLowerCase(),
+    });
+
+    await portfolio.save();
+
+    res.status(201).json({
+      message: "Portfolio created successfully",
+      portfolio,
+    });
+  } catch (err) {
+    if (err.name === "ValidationError") {
+      const messages = Object.values(err.errors).map((e) => e.message);
+      return res.status(400).json({ error: messages.join(", ") });
+    }
+
+    console.error("createPortfolio error:", err);
+    res.status(500).json({ error: "Server error. Please try again." });
+  }
+};
+
+// Update a portfolio by username
 export const updatePortfolio = async (req, res) => {
   try {
     const portfolio = await UserPortfolio.findOneAndUpdate(
@@ -79,7 +99,7 @@ export const updatePortfolio = async (req, res) => {
   }
 };
 
-// Delete
+// Delete a portfolio by username
 export const deletePortfolio = async (req, res) => {
   try {
     const portfolio = await UserPortfolio.findOneAndDelete({
