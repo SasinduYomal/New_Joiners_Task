@@ -8,12 +8,12 @@ const PortfolioForm = ({ isEdit }) => {
 
     const [formData, setFormData] = useState({
         username: '',
-        fullname: '',           // ✅ Fixed: matches backend model field name
+        fullname: '',           
         title: '',
         bio: '',
         profileImage: '',
         contact: { email: '', linkedin: '', github: '', website: '' },
-        skills: [''],           // ✅ Kept as array in UI, joined to string on submit
+        skills: [''],           
         projects: [{ name: '', description: '', technologies: '', githubLink: '', liveDemoLink: '' }], // ✅ Fixed: liveDemoLink
         experience: [{ company: '', role: '', duration: '', description: '' }]
     });
@@ -92,11 +92,7 @@ const PortfolioForm = ({ isEdit }) => {
         try {
             const dataToSubmit = { ...formData };
 
-            // ✅ Fixed: join skills array into a comma-separated string (matches backend String type)
             dataToSubmit.skills = dataToSubmit.skills.filter(Boolean).join(', ');
-
-            // ✅ Fixed: keep technologies as a string (matches backend String type)
-            // No transformation needed — it's already a string from the input
 
             if (isEdit) {
                 await updatePortfolio(username, dataToSubmit);
@@ -127,17 +123,15 @@ const PortfolioForm = ({ isEdit }) => {
                         </div>
                         <div style={{ flex: 1 }}>
                             <label>Full Name</label>
-                            {/* ✅ Fixed: name and value both use 'fullname' */}
                             <input name='fullname' value={formData.fullname} onChange={handleChange} required />
                         </div>
                     </div>
                     <div className="flex gap-4">
                         <div style={{ flex: 1 }}>
                             <label>Title</label>
-                            {/* ✅ Fixed: value was wrongly bound to formData.professionalTitle */}
                             <input name='title' value={formData.title} onChange={handleChange} />
                         </div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1 }} className='profileImage'>
                             <label>Profile Image URL</label>
                             <input name='profileImage' value={formData.profileImage} onChange={handleChange} type="text" />
                         </div>

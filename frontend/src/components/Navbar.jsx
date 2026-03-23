@@ -6,7 +6,7 @@ const Navbar = ({ theme, toggleTheme }) => {
         <nav className="navbar">
             <div className="container">
                 <Link to="/" className="navbar-brand">
-                    DevPort
+                    PortfolioHub
                 </Link>
                 <div className="nav-links flex items-center gap-4">
                     <button 

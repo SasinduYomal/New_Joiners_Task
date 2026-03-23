@@ -26,7 +26,6 @@ const PortfolioTemplate = () => {
   if (error)   return <div className="text-center mt-10 text-red-500">{error}</div>;
   if (!data)   return null;
 
-  // ✅ skills is stored as a comma-separated string in the backend — split for display
   const skillsArray = data.skills
     ? data.skills.split(',').map(s => s.trim()).filter(Boolean)
     : [];
@@ -43,7 +42,6 @@ const PortfolioTemplate = () => {
             className="w-36 h-36 mx-auto rounded-full border-4 border-blue-600 object-cover mb-4"
           />
         )}
-        {/* ✅ Fixed: fullname (lowercase) */}
         <h1 className="text-4xl font-bold">{data.fullname}</h1>
         {data.title && (
           <h3 className="text-blue-600 font-medium mt-2">{data.title}</h3>

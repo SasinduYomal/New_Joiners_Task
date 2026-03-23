@@ -21,9 +21,7 @@ const Home = () => {
             <Link to="/create" className="btn btn-primary-glow btn-lg">
               Get Started for Free
             </Link>
-            <a href="#features" className="btn btn-outline btn-lg">
-              Explore Features
-            </a>
+            
           </div>
         </div>
       </section>
