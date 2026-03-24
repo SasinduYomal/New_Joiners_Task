@@ -89,9 +89,6 @@ foliox/
 Create a `.env` file in the `backend/` folder with the following variables:
 
 ```env
-# MongoDB connection string
-# For local development:
-MONGO_URI=mongodb://localhost:27017/Portfolio_DB
 
 # For MongoDB Atlas (recommended for deployment):
 # MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/Portfolio_DB
